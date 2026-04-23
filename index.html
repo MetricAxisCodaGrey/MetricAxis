@@ -12,24 +12,22 @@
     };
 
     function sendToServer(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
 
-      fetch("http://YOUR_SERVER_IP:3000/location", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ lat, lon })
-      })
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("status").innerText = "Sent successfully!";
-      })
-      .catch(err => {
-        document.getElementById("status").innerText = "Failed to send";
-      });
-    }
+  fetch("https://script.google.com/macros/s/AKfycbwOYmFf5HVM-RzKK078txFLUaQ800ScMBvv9txXsjWfvg68UUcFw15eJMobor7Q--A6/exec", {
+    method: "POST",
+    body: JSON.stringify({ lat, lon })
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("status").innerText = "Sent successfully!";
+  })
+  .catch(err => {
+    document.getElementById("status").innerText = "Failed to send";
+    console.log(err);
+  });
+}
 
     function showError() {
       document.getElementById("status").innerText =
