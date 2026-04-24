@@ -15,21 +15,21 @@
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
 
-      fetch("https://script.google.com/macros/s/AKfycbxkE5Veu8LELIFLOLWDKLLtjssQwCKwvvgct1OxbOXAwphmXvP5xZsrP3JzDD15r2JX/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ lat, lon })
-      })
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("status").innerText = "Sent successfully!";
-      })
-      .catch(err => {
-        document.getElementById("status").innerText = "Failed to send";
-      });
-    }
+      fetch("YOUR_WEB_APP_URL_HERE", {
+  method: "POST",
+  mode: "no-cors", // This prevents the browser from blocking the request
+  cache: "no-cache",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ lat, lon })
+})
+.then(() => {
+  document.getElementById("status").innerText = "Data sent to Google!";
+})
+.catch(err => {
+  document.getElementById("status").innerText = "Error: " + err;
+});
 
     function showError() {
       document.getElementById("status").innerText =
